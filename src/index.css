@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Variables (design tokens) ────────────────────────────────────────── */
+:root {
+  --color-base:           #121212;
+  --color-elevated:       #1a1a1a;
+  --color-highlight:      #282828;
+  --color-press:          #3e3e3e;
+
+  --color-brand:          #1db954;
+  --color-brand-hover:    #1ed760;
+
+  --color-text-primary:   #ffffff;
+  --color-text-secondary: #b3b3b3;
+  --color-text-muted:     #6a6a6a;
+
+  --color-border:         #333333;
+  --color-error:          #f15e6c;
+
+  --player-height:        90px;
+  --sidebar-width:        240px;
+  --topbar-height:        64px;
+  --mobile-nav-height:    64px;
+}
+
+/* ─── Base resets ───────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Inter', system-ui, Helvetica, Arial, sans-serif;
+  background-color: var(--color-base);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Custom scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-press);
+}
+
+/* ─── Text selection ────────────────────────────────────────────────────────── */
+::selection {
+  background: var(--color-brand);
+  color: #000;
+}
+
+/* ─── Focus ring ────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+/* ─── Tailwind component layer additions ────────────────────────────────────── */
+@layer components {
+  /* Reusable input base style */
+  .input-base {
+    @apply w-full rounded-md border border-border bg-base-elevated px-4 py-3
+           text-sm text-text-primary placeholder-text-muted
+           transition-colors duration-150
+           focus:border-brand focus:outline-none;
+  }
+
+  /* Primary CTA button */
+  .btn-primary {
+    @apply flex items-center justify-center gap-2 rounded-pill
+           bg-brand px-8 py-3 text-sm font-bold text-black
+           transition-all duration-150
+           hover:bg-brand-hover hover:scale-105
+           active:scale-95
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100;
+  }
+
+  /* Ghost button */
+  .btn-ghost {
+    @apply flex items-center justify-center gap-2 rounded-pill
+           border border-border px-8 py-3 text-sm font-bold text-text-primary
+           transition-all duration-150
+           hover:border-text-primary
+           active:scale-95;
+  }
+
+  /* Skeleton shimmer */
+  .skeleton {
+    @apply rounded bg-base-highlight;
+    background: linear-gradient(
+      90deg,
+      #282828 25%,
+      #333 50%,
+      #282828 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.8s infinite linear;
+  }
+
+  /* Card surface */
+  .card {
+    @apply rounded-lg bg-base-elevated p-4
+           transition-colors duration-150
+           hover:bg-base-highlight cursor-pointer;
+  }
+}
