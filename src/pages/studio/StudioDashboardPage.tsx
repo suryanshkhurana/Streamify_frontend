@@ -8,7 +8,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '@/stores/authStore';
-import { studioApi } from '@/api/studio';
+import { studioApi, type StudioTrack } from '@/api/studio';
 
 export default function StudioDashboardPage() {
 const user = useAuthStore((s) => s.user);
@@ -244,5 +244,3 @@ function StatusBadge({ status }: { status: StudioTrack['status'] }) {
   );
 }
 
-// ─── Import fix for StatusBadge type ─────────────────────────────────────────
-import type { StudioTrack } from '@/api/studio';

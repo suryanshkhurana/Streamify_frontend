@@ -42,19 +42,24 @@ export const playlistApi = {
       const playlist = data.data;
 
       // Populate track metadata from catalog-service
-      const trackIds = (playlist.tracks || []).map((pt: any) => pt.trackId);
+      const trackIds = playlist.tracks || [];
       if (trackIds.length > 0) {
         // dynamic import to avoid circular dependency if any
         const { catalogApi } = await import('./catalog');
         const catalogTracks = await catalogApi.getTracksByIds(trackIds);
-        const trackMap = new Map(catalogTracks.map(t => [t.id, t]));
+        const trackMap = new Map(catalogTracks.map((t: any) => [t.id, t]));
 
-        playlist.tracks = playlist.tracks
-          .map((pt: any) => ({
-            ...pt,
-            track: trackMap.get(pt.trackId) || null,
+        playlist.tracks = trackIds
+          .map((trackId: string) => ({
+            id: `${playlist.id}-${trackId}`,
+            playlistId: playlist.id,
+            trackId,
+            addedAt: playlist.createdAt,
+            track: trackMap.get(trackId) || null,
           }))
           .filter((pt: any) => pt.track !== null);
+      } else {
+        playlist.tracks = [];
       }
 
       return playlist;

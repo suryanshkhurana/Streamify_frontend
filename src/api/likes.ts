@@ -13,7 +13,7 @@ export const likesApi = {
   getLikedSongs: async (page = 1, limit = 50): Promise<{ likes: LikedSong[]; total: number }> => {
     try {
       const { data } = await api.get(`/likes?page=${page}&limit=${limit}`);
-      const likes = data.data as LikedSong[];
+      const likes = (data.data as any[]).map(l => ({ ...l, trackId: l.entityId })) as LikedSong[];
       const total = data.meta?.total || 0;
 
       // Populate tracks from catalog

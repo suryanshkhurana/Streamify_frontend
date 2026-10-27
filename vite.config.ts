@@ -12,10 +12,13 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    host: '0.0.0.0', // bind to all interfaces so Docker can expose the port
     proxy: {
-      // Proxy all /api requests to the API gateway in local dev
+      // Proxy all /api requests to the API gateway.
+      // In Docker: set API_GATEWAY_URL=http://api-gateway:3000 (container name).
+      // In local dev: defaults to http://localhost:3000.
       '/api': {
-        target: 'http://localhost:3000',
+        target: process.env['API_GATEWAY_URL'] || 'http://localhost:3000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

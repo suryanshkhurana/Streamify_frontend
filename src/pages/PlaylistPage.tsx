@@ -271,7 +271,7 @@ export default function PlaylistPage() {
                     <LikeButton trackId={pt.track.id} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                     <TrackContextMenu
                       onAdd={() => setAddModal({ trackId: pt.track.id, title: pt.track.title })}
-                      onRemove={isOwner ? () => removeTrackMutation.mutate(pt.id) : undefined}
+                      onRemove={isOwner ? () => removeTrackMutation.mutate(pt.trackId) : undefined}
                     />
                   </div>
                 </div>
@@ -285,8 +285,5 @@ export default function PlaylistPage() {
         <AddToPlaylistModal trackId={addModal.trackId} trackTitle={addModal.title} onClose={() => setAddModal(null)} />
       )}
     </div>
-  );
-}
-    </div >
   );
 }
